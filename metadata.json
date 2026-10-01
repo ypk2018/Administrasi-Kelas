@@ -1,0 +1,6 @@
+{
+  "name": "Aplikasi Administrasi Wali Kelas SMP Negeri 7 Sentani",
+  "description": "Aplikasi Administrasi Wali Kelas, Guru, dan Manajemen Sekolah SMP Negeri 7 Sentani Tahun Pelajaran 2026/2027",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
