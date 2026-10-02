@@ -36,7 +36,8 @@ export const initialSchoolConfig: SchoolConfig = {
   website: 'https://smpn7sentani.sch.id',
   headmasterName: 'Maikel Paul Wally, S.Pd.',
   headmasterNip: '197812232003121006',
-  logoUrl: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=150&auto=format&fit=crop&q=80',
+  logoUrl: 'Lambang_Kabupaten_Jayapura-removebg-preview.png',
+  rightLogoUrl: 'Logo_SMP_N_7_Terbaru-removebg-preview.png',
   currentAcademicYear: '2026/2027',
   currentSemester: 'Ganjil',
   signatureCity: 'Sentani'

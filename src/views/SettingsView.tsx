@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SchoolConfig } from '../types';
-import { Settings, Save, RotateCcw, Download } from 'lucide-react';
+import { Settings, Save, RotateCcw, Download, Image as ImageIcon } from 'lucide-react';
 
 interface SettingsViewProps {
   config: SchoolConfig;
@@ -18,7 +18,29 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onUpdateConfig(formData);
-    alert('Pengaturan sekolah berhasil diperbarui.');
+    alert('Pengaturan sekolah dan logo berhasil diperbarui.');
+  };
+
+  const handleLeftLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, logoUrl: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRightLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, rightLogoUrl: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleBackup = () => {
@@ -34,12 +56,57 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   return (
     <div className="space-y-6 max-w-3xl mx-auto">
       <div>
-        <h2 className="text-xl font-bold text-slate-900">Pengaturan Sekolah & Konfigurasi Sistem</h2>
-        <p className="text-xs text-slate-500">Kelola identitas satuan pendidikan, kepala sekolah, tahun pelajaran, dan backup data.</p>
+        <h2 className="text-xl font-bold text-slate-900">Pengaturan Sekolah & Kop Surat (Logo Kiri & Kanan)</h2>
+        <p className="text-xs text-slate-500">Kelola identitas satuan pendidikan, kepala sekolah, dan upload logo resmi kiri dan kanan untuk kop surat.</p>
       </div>
 
       <div className="bg-white rounded-2xl border border-slate-200 p-6 md:p-8 shadow-xs space-y-6">
-        <form onSubmit={handleSubmit} className="space-y-4 text-xs">
+        <form onSubmit={handleSubmit} className="space-y-6 text-xs">
+          {/* Logo Upload Section (Left & Right) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+              <label className="block font-bold text-slate-700">Logo Kiri (Pemda / Dinas / Tut Wuri)</label>
+              <div className="flex items-center gap-3">
+                <div className="w-14 h-14 rounded-xl border border-slate-300 bg-white flex items-center justify-center overflow-hidden shrink-0 shadow-xs">
+                  {formData.logoUrl ? (
+                    <img src={formData.logoUrl} alt="Logo Kiri" className="w-full h-full object-contain" />
+                  ) : (
+                    <ImageIcon className="w-6 h-6 text-slate-400" />
+                  )}
+                </div>
+                <div className="flex-1">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleLeftLogoUpload}
+                    className="w-full text-[11px] text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[11px] file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+              <label className="block font-bold text-slate-700">Logo Kanan (Logo Sekolah / OSIS)</label>
+              <div className="flex items-center gap-3">
+                <div className="w-14 h-14 rounded-xl border border-slate-300 bg-white flex items-center justify-center overflow-hidden shrink-0 shadow-xs">
+                  {formData.rightLogoUrl ? (
+                    <img src={formData.rightLogoUrl} alt="Logo Kanan" className="w-full h-full object-contain" />
+                  ) : (
+                    <ImageIcon className="w-6 h-6 text-slate-400" />
+                  )}
+                </div>
+                <div className="flex-1">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleRightLogoUpload}
+                    className="w-full text-[11px] text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[11px] file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block font-bold text-slate-700 mb-1">Nama Sekolah</label>
@@ -57,6 +124,27 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 value={formData.npsn}
                 onChange={(e) => setFormData({ ...formData, npsn: e.target.value })}
                 className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-mono"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-bold text-slate-700 mb-1">Alamat / Jalan</label>
+              <input
+                type="text"
+                value={formData.address}
+                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl"
+              />
+            </div>
+            <div>
+              <label className="block font-bold text-slate-700 mb-1">Email Sekolah</label>
+              <input
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl"
               />
             </div>
           </div>

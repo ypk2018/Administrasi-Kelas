@@ -59,11 +59,24 @@ export const DocumentsView: React.FC<DocumentsViewProps> = ({ config, students }
 
       {/* Printable Document Preview */}
       <div className="bg-white p-12 rounded-2xl border border-slate-200 shadow-sm space-y-8 max-w-3xl mx-auto">
-        <div className="text-center border-b-2 border-slate-900 pb-4 space-y-1">
-          <h3 className="text-sm font-bold uppercase tracking-wider">PEMERINTAH KABUPATEN JAYAPURA</h3>
-          <h3 className="text-sm font-bold uppercase tracking-wider">DINAS PENDIDIKAN</h3>
-          <h1 className="text-lg font-extrabold uppercase tracking-tight">{config.name}</h1>
-          <p className="text-xs text-slate-600">{config.address} · Email: {config.email}</p>
+        {/* Kop Surat dengan Dual Logo (Kiri & Kanan) */}
+        <div className="flex items-center justify-between border-b-2 border-slate-900 pb-4">
+          {config.logoUrl ? (
+            <img src={config.logoUrl} alt="Logo Kiri" className="w-16 h-16 object-contain shrink-0" />
+          ) : (
+            <div className="w-16 h-16" />
+          )}
+          <div className="text-center flex-1 space-y-0.5 px-2">
+            <h3 className="text-xs font-bold uppercase tracking-wider">PEMERINTAH KABUPATEN JAYAPURA</h3>
+            <h3 className="text-xs font-bold uppercase tracking-wider">DINAS PENDIDIKAN</h3>
+            <h1 className="text-base font-extrabold uppercase tracking-tight">{config.name}</h1>
+            <p className="text-[11px] text-slate-600">{config.address} · Email: {config.email}</p>
+          </div>
+          {config.rightLogoUrl ? (
+            <img src={config.rightLogoUrl} alt="Logo Kanan" className="w-16 h-16 object-contain shrink-0" />
+          ) : (
+            <div className="w-16 h-16" />
+          )}
         </div>
 
         {docType === 'panggilan' && (

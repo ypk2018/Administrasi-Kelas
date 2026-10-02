@@ -35,6 +35,7 @@ export interface SchoolConfig {
   headmasterName: string;
   headmasterNip: string;
   logoUrl: string;
+  rightLogoUrl?: string;
   currentAcademicYear: string;
   currentSemester: 'Ganjil' | 'Genap';
   signatureCity: string;
